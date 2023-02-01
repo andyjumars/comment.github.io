@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>發表評論4-13</title>
+	<style type="text/css">
+		*{
+			padding:0;
+			margin:0;
+		}
+
+		#box {
+			width:1000px;
+			border:1px solid #ccc;
+			margin:100px auto;
+			padding:20px;
+		}
+
+		#comment {
+			width:80%;
+			padding:10px 10px;
+			font-size:20px;
+			outline:none;
+		}
+
+		.box_top{
+			margin-top:20px;
+		}
+
+		ul{
+			list-style:none;
+		}
+
+		#comment_content li {
+			border-bottom:1px dashed #ccc;
+			width:800px;
+			color:red;
+			line-height: 45px;
+		}
+
+		#comment_content li a {
+			float:right;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div class="box_top">
+			<textarea id="comment" cols="80" rows="10" placeholder="請輸入您的評論"></textarea>
+			<button id="btn">發表</button>
+
+		</div>
+		<ul id="comment_content">
+			
+			<!--<li>
+				我的內容
+				<a href="javascript:void(0);">刪除</a> javascript:void(0);阻止默認事件
+
+			</li>	-->
+
+		</ul>
+	</div>
+	<script type="text/javascript">
+		window.onload = function(){
+			//監聽按鈕
+			$('btn').onclick = function(){
+					//獲取用戶輸入的內容
+					var content = $('comment').value;
+					//也判斷用戶可能沒輸入
+					if(content.length === 0){//如果content.lengt ===0，代表用戶沒輸入
+						alert('請輸入內容');
+						return; //別繼續往下走
+					}
+
+					//用戶輸入內容，創建li標籤插入到ul
+					var newLi =document.createElement('li');
+					newLi.innerHTML = `${content}<a href='javascript:void(0)'>刪除</a>`;//javascript:void(0)阻止默認事件，用於阻止a href的功能
+
+					//$('comment_content').appendChild(newLi);
+					$('comment_content').insertBefore(newLi,$('comment_content').children[0]);
+
+					//清空輸入框內容
+					$('comment').value = '';
+
+					//刪除評論
+					var delBtns = document.getElementsByTagName('a');
+					for (var i=0; i < delBtns.length; i++){
+						delBtns[i].onclick = function(){
+							 //當前this指的是a標籤 
+							this.parentNode.remove(); //指向a標籤的父級li標籤
+						}
+					}
+
+			};	
+
+			function $ (id){
+				return typeof id === 'string' ? document.getElementById(id):null;
+			}
+		}
+
+	</script>
+</body>
+</html>
